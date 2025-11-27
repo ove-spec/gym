@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ladda upp PDF</title>
+  <style>
+    /* --- Grundläggande stil --- */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: bold;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* --- Uppladdningsruta --- */
+    .upload-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: center;
+      margin-top: 120px; /* plats för headern */
+      width: 90%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input[type="file"] {
+      margin: 15px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      max-width: 200px;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* --- PDF-förhandsvisning --- */
+    #pdfPreview {
+      display: none;
+      width: 100%;
+      height: 500px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* --- Karta (bild) --- */
+    img {
+      max-width: 90%;
+      height: auto;
+      margin: 30px auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    footer {
+      margin-top: auto;
+      width: 100%;
+      text-align: center;
+      background-color: #e9ecef;
+      font-size: 14px;
+      color: #333;
+      padding: 10px 0;
+    }
+
+    /* --- Responsiv design --- */
+    @media (max-width: 768px) {
+      header {
+        font-size: 20px;
+        padding: 12px 0;
+      }
+
+      .upload-container {
+        padding: 20px;
+        margin-top: 100px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      #pdfPreview {
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 18px;
+      }
+
+      .upload-container {
+        width: 95%;
+        padding: 15px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      #pdfPreview {
+        height: 300px;
+      }
+
+      footer {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>📅 Schema</header>
+
+  <div class="upload-container">
+    <h2>Ladda upp en PDF-fil</h2>
+    <form action="upload.php" method="POST" enctype="multipart/form-data">
+      <input type="file" name="pdf" accept="application/pdf" required>
+      <br>
+      <button type="submit">Ladda upp</button>
+    </form>
+
+    <!-- PDF-förhandsvisning -->
+    <iframe id="pdfPreview"></iframe>
+  </div>
+
+  <img src="TodoApi/karta.png" alt="Karta">
+
+  <footer>Billing info: 676767 420 69</footer>
+
+  <script>
+    const fileInput = document.querySelector('input[type="file"]');
+    const previewFrame = document.getElementById('pdfPreview');
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file && file.type === "application/pdf") {
+        const fileURL = URL.createObjectURL(file);
+        previewFrame.src = fileURL;
+        previewFrame.style.display = "block";
+      } else {
+        previewFrame.style.display = "none";
+        previewFrame.src = "";
+      }
+    });
+  </script>
+
+</body>
+</html>
