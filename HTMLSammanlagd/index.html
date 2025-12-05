@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ladda upp PDF & Skolmaten</title>
+<title>Schema och Matsedel</title>
 
 <style>
 /* --- Grundläggande stil --- */
@@ -94,16 +94,10 @@ button:hover { background-color: #0056b3; }
 #pdfPreview {
   display: none;
   width: 100%;
-  height: 500px;
+  height: 650px;
   margin-top: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-/* --- Nedladdningsknapp --- */
-#downloadBtn {
-  display: none;
-  margin-top: 15px;
 }
 
 /* --- Karta (bild) --- */
@@ -145,7 +139,7 @@ footer {
 </head>
 <body>
 
-<header>Schema</header>
+<header>Rudbecks informationscentral</header>
 
 <!-- ------------------------- -->
 <!--   SKOLMATEN SEKTIONEN     -->
@@ -161,14 +155,13 @@ footer {
 <!-- ------------------------- -->
 
 <div class="upload-container">
-  <h2>Ladda upp en PDF-fil</h2>
+  <h2>Ladda upp ditt schema</h2>
   <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="pdf" accept="application/pdf" required>
     <br><br>
     <button type="submit">Ladda upp</button>
   </form>
   <iframe id="pdfPreview"></iframe>
-  <button id="downloadBtn">Ladda ner PDF</button>
 </div>
 
 <img src="karta.png" alt="Karta">
@@ -277,7 +270,7 @@ async function loadPDF() {
 const form = document.getElementById("uploadForm");
 const fileInput = document.querySelector('input[name="pdf"]');
 const previewFrame = document.getElementById("pdfPreview");
-const downloadBtn = document.getElementById("downloadBtn");
+
 
 // ---- Upload PDF ----
 form.addEventListener("submit", async (event) => {
@@ -292,13 +285,7 @@ form.addEventListener("submit", async (event) => {
   previewFrame.src = fileURL;
   previewFrame.style.display = "block";
 
-  downloadBtn.style.display = "inline-block";
-  downloadBtn.onclick = () => {
-    const a = document.createElement("a");
-    a.href = fileURL;
-    a.download = file.name;
-    a.click();
-  };
+  
 
   alert("PDF sparad lokalt i webbläsaren!");
 });
@@ -311,13 +298,7 @@ window.addEventListener("load", async () => {
     previewFrame.src = fileURL;
     previewFrame.style.display = "block";
 
-    downloadBtn.style.display = "inline-block";
-    downloadBtn.onclick = () => {
-      const a = document.createElement("a");
-      a.href = fileURL;
-      a.download = "saved.pdf";
-      a.click();
-    };
+    
 
     console.log("PDF hämtad från webbläsarcache!");
   }
@@ -326,4 +307,3 @@ window.addEventListener("load", async () => {
 
 </body>
 </html>
-
